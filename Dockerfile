@@ -32,7 +32,7 @@ WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
 
 # Chuyển quyền sở hữu cho user appuser
-RUN chown -R appuser:appuser /app
+RUN chown -R appuser:appgroup /app
 USER appuser
 
 # Mở port (mặc định Spring Boot là 8080)
