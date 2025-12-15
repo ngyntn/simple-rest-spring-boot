@@ -4,6 +4,7 @@ FROM eclipse-temurin:21-jdk-alpine AS builder
 # Tạo thư mục làm việc
 WORKDIR /app
 
+
 # Copy file Maven Wrapper và pom.xml trước để tận dụng cache layer
 COPY mvnw .
 COPY .mvn .mvn
