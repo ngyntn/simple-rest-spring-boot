@@ -26,6 +26,7 @@ FROM eclipse-temurin:21-jre-alpine
 RUN addgroup -g 1001 -S appgroup && \
     adduser -u 1001 -S appuser -G appgroup
 
+
 WORKDIR /app
 
 # Copy file JAR từ stage builder
