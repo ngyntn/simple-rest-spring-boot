@@ -20,8 +20,8 @@ jobs:
           password: ${{ secrets.DOCKER_HUB }}
 
       - name: Build and push Docker Image
-        run:
-          docker build -t tannguyen012/spring-boot-image:latest .
+        run: |
+          docker build -t tannguyen012/spring-boot-image:latest . 
           docker push tannguyen012/spring-boot-image:latest
 
       - name: Deploy to server 
