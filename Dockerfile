@@ -10,6 +10,7 @@ COPY .mvn .mvn
 COPY pom.xml .
 
 # Download dependencies (layer này sẽ được cache nếu pom.xml không đổi)
+RUN chmod +x mvnw
 RUN ./mvnw dependency:go-offline -B
 
 # Copy source code
@@ -24,6 +25,7 @@ FROM eclipse-temurin:21-jre-alpine
 # Tạo user non-root để chạy app (tăng bảo mật)
 RUN addgroup -g 1001 -S appgroup && \
     adduser -u 1001 -S appuser -G appgroup
+
 
 WORKDIR /app
 

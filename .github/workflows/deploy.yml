@@ -1,0 +1,38 @@
+name: deploy to server
+
+on: 
+  push:
+      branches:
+        - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker hub
+        uses: docker/login-action@v3
+        with:
+          username: tannguyen012
+          password: ${{ secrets.DOCKER_HUB }}
+
+      - name: Build and push Docker Image
+        run: |
+          docker build -t tannguyen012/spring-boot-image:latest . 
+          docker push tannguyen012/spring-boot-image:latest
+
+      - name: Deploy to server 
+        uses: appleboy/ssh-action@v1.0.3
+        with: 
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            cd /opt/app
+            docker compose pull
+            docker compose up -d
+            docker image prune -f
+            echo "Deploy completed"
